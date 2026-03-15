@@ -23,22 +23,24 @@ input_message = st.text_input(label="質問内容を入力してください。"
 
 st.divider()
 
-
-if st.button("実行") and selected_item == "ファッション":
-    messages = [
-    SystemMessage(content="You are an outstanding fashion expert."),
-    HumanMessage(content=input_message),
-    ]
-    result = llm(messages)
-    st.divider()
-    st.write(f"ファッション専門家の回答: {result.content}")
-
-elif st.button("実行") and selected_item == "ダイエット":
-    messages = [
-    SystemMessage(content="You are an outstanding diet expert."),
-    HumanMessage(content=input_message),
-    ]
-    result = llm(messages)
-    st.divider()
-    st.write(f"ダイエット専門家の回答: {result.content}")
+if st.button("実行"):
+    if not input_message.strip():
+        st.warning("質問内容を入力してください。")
+    else:
+        if selected_item == "ファッション":
+            messages = [
+                SystemMessage(content="You are an outstanding fashion expert."),
+                HumanMessage(content=input_message),
+            ]
+            result = llm.invoke(messages)
+            st.divider()
+            st.write(f"ファッション専門家の回答: {result.content}")
+        elif selected_item == "ダイエット":
+            messages = [
+                SystemMessage(content="You are an outstanding diet expert."),
+                HumanMessage(content=input_message),
+            ]
+            result = llm.invoke(messages)
+            st.divider()
+            st.write(f"ダイエット専門家の回答: {result.content}")
 
